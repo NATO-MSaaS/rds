@@ -2,15 +2,15 @@
 
 The NATO Resource Discovery Specification (RDS) defines a protocol for discovering simulation resources and establishing a federated MSaaS Ecosystem.
 
-## Licence
+## License
 
 Copyright (C) 2024 NATO/OTAN.
 
-This work is licensed under CC BY-ND 4.0. To view a copy of this license, visit (http://creativecommons.org/licenses/by-nd/4.0/). A copy of the license is available [here](LICENCE.md). 
+This work is licensed under CC BY-ND 4.0. To view a copy of this license, visit (http://creativecommons.org/licenses/by-nd/4.0/). A copy of the license is available [here](LICENSE.md). 
 
 The work includes all specifications and related documentation.
 
-Above licence gives you the right to use and redistribute the NATO RDS in its entirety without modification. You are NOT allowed to modify the NATO RDS or its documentation without prior permission by the NATO Modelling and Simulation Group (NMSG).
+Above license gives you the right to use and redistribute the NATO RDS in its entirety without modification. You are NOT allowed to modify the NATO RDS or its documentation without prior permission by the NATO Modelling and Simulation Group (NMSG).
 
 ## Versions, updates and extensions
 
