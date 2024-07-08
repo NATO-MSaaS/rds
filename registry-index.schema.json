@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://sto.nato.int/rds/v1/registry-index.schema.json",
+  "title": "Registry Index",
+  "description": "Full registry index, i.e. list of all resources provided by this registry.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "description": "List of resources",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/resource"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "definitions": {
+    "resource": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the resource",
+          "type": "string",
+		  "minLength": 1
+        },
+        "uid": {
+          "description": "Unique identifier of the resource",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "uid"
+      ]
+    }
+  }
+}

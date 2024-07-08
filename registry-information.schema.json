@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://sto.nato.int/rds/v1/registry-information.schema.json",
+  "title": "Registry Information",
+  "description": "This schema defines basic information about a registry and its content.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "supportedVersion": {
+          "description": "Highest RDS version that is supported by this registry.",
+          "type": "string",
+          "enum": [
+            "RDS-v1-D2",
+            "RDS-v1-D3",
+            "RDS-v1-D4",
+            "RDS-v1-D5"
+          ]
+        },
+        "nrOfResources": {
+          "description": "Number of resources that the registry provides via this interface.",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "supportedVersion",
+        "nrOfResources"
+      ]
+    }
+  }
+}
