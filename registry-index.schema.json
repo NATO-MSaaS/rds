@@ -1,6 +1,6 @@
 {
-  "$schema": "https://json-schema.org/draft/2019-09/schema",
-  "$id": "http://sto.nato.int/rds/v1/registry-index.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sto.nato.int/rds/v1/registry-index.schema.json",
   "title": "Registry Index",
   "description": "Full registry index, i.e. list of all resources provided by this registry.",
   "type": "object",

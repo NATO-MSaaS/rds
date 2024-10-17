@@ -107,13 +107,14 @@ Figure 3 illustrates the two key elements required to establish information exch
 .Common Data Model and Data Exchange Protocol are required.
 image::rds-figure-3.png[Figure 3]
 
+[#data-exchange-models]
 === Common Data Exchange Model
 
 As the key objective of federated M&S registries is to connect registries from various stakeholders, proprietary data exchange models that are not available to all stakeholders are obviously not a viable option. To enable wide adoption by many stakeholders, openness and free availability of the common data exchange model is essential.
 
 This specification allows the use of different date exchange models to exchange data between MSaaS registries. Specifically,
 
-* A simplistic JSON data model (as defined in the accompanying JSON Schemas).
+* A simplistic JSON data model (as defined in the accompanying JSON Schemas). See https://github.com/NATO-MSaaS/sdt-json for more details.
 * Modeling and Simulation (M&S) Community of Interest (COI) Discovery Metadata Specification (MSC-DMS).
 * Discovery Metadata Specification for M&S Resources (DMS-MSR). Note: This standard is currently under development by SISO.
 
@@ -300,7 +301,7 @@ The response attribute `details` contains the cause of the error.
 
 A request with an invalid JSON payload will fail. The following request contains a JSON payload with a missing comma.
 
-.Request:
+.Request (payload):
 ----
 {
    "name1": "value1"
@@ -334,8 +335,7 @@ In this example, the payload for creating a new resource does not contain all re
 {
    "coreInformation": {
       "description": "resourceType and name are MISSING!"
-   },
-   "additionalInformation": { ... }
+   }
 }
 ----
 
@@ -420,7 +420,7 @@ Content-Type: application/json
 
 === Multiple errors in JSON payload
 
-If an endpoint expects a JSON payload and this payload contains multiple errors, the response errors array contains one error object for each of the detected errors.
+If an endpoint expects a payload and this payload contains multiple errors, the response errors array contains one error object for each of the detected errors.
 In case that the errors would lead to different response status codes, 400 BAD REQUEST takes precedence over 404 NOT FOUND.
 
 ==== Example: Payload with two '400' errors
@@ -438,12 +438,11 @@ Content-Type: application/json
         "tacticalSituation": "Urban assault",
         "approximatedDurationOfTraining": "10",
         ...
-    },
-    "scenarioConfiguration": { ... }
+    }
 
 ----
 
-The payload above
+The example payload above
 
 * contains an invalid value for `additionalInformation.timeOfDay` (only "Daytime", "Nighttime" is allowed and *not* "Day"), and
 *  does not contain the required attribute `additionalInformation.geographicalArea`.
@@ -480,11 +479,11 @@ Content-Type: application/json
 
 {
   "coreInformation": {},
-  "scenarioConfiguration": {}
+  "additionalInformation": {}
 }
 ----
 
-The payload is missing many required attributes and the specified `resourceUid` in the URL does not exist. In that case the error for the non-existing `resourceUid` is reported as it has a higher priority. The error for the missing attributes however is ignored.
+The example payload is missing many required attributes and the specified `resourceUid` in the URL does not exist. In that case the error for the non-existing `resourceUid` is reported as it has a higher priority. The error for the missing attributes however is ignored.
 
 .Response:
 ----
@@ -529,13 +528,15 @@ This operation returns basic information about the registry itself. Specifically
 
 Returns a JSON object according to the registry information JSON schema that is provided in file link:registry-information.schema.json[registry-information.schema.json] (see  xref:json-schema-registry-information[xrefstyle=short]).
 
+Each registry is required to provide information about the support RDS version so that clients (if needed) can adjust their behavior.
+
 ----
 HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
     "data": {
-        "supportedVersion": "RDS-v1-D4",
+        "supportedVersion": "RDS-v1.0",
         "nrOfResources": 123
     }
 }
@@ -623,6 +624,23 @@ This endpoint supports multiple content types:
 |===
 
 
+.Example Request:
+----
+POST /rds/v1/resources/
+Content-Type: application/json
+
+{
+  "coreInformation": {
+    "name": "Weapon Effect Service",
+    "description": "The WES provides weapon effects...",
+    "owner": "ACME Inc.",
+    "version": "2.0.1",
+    "resourceType": "M&S Service",
+    "url": "https://msaas.acme.com/extern/registry-0123-abcd-6543"
+  }
+}
+----
+
 
 === Return codes
 
@@ -651,6 +669,7 @@ Successful execution of the operation creates a new resource.
 
 Specifically, the returned JSON object includes the identifier of the created resource (that can then be used in follow-on calls to modify it or get its details).
 
+.Example Response
 ----
 HTTP/1.1 201 CREATED
 Content-Type: application/json
@@ -835,15 +854,16 @@ This operation returns a list of all resources.
  GET /rds/v1/resources
  Content-Type: ...
 
-RDS supports different content types, i.e., the result can be delivered in a variety of formats. The client MUST specify the desired format in its request, by defining an appropriate Content-Type in the HTTP request header.
+RDS supports different content types, i.e., the result can be delivered in a variety of data exchange models (see xref:data-exchange-models[xrefstyle=short]). The client MUST specify the desired data exchange model in its request, by defining an appropriate Content-Type in the HTTP request header.
 
 Valid options are:
 
+[cols="1,2"]
 |===
 |Content-Type |Format of result
 
 |application/json
-|Result will be provided as Service Description Template (SDT) in JSON format. See `sdt-json.adoc` for more details. All registries MUST offer this option.
+|Result will be provided as Service Description Template (SDT) in JSON format. See https://github.com/NATO-MSaaS/sdt-json for more details. All registries MUST offer this option.
 
 |application/vnd.msc-dms
 |Result will be provided as MSC-DMS compliant XML file. OPTIONAL.
@@ -870,6 +890,14 @@ Valid options are:
 
 Successful execution of the operation returns a list of all resources published by this registry. All metadata information is included.
 
+.Example Request
+----
+GET https://<server>/rds/v1/resources
+Content-Type: application/json
+----
+
+
+.Example Response
 ----
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -885,8 +913,6 @@ Content-Type: application/json
             "icon": "iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAA...",
             "resourceType": "scenario",
             "url": "https://registry.local/extern/registry-0123-abcd-6543"
-        },
-        "deploymentInformation": {
         }
     },
     {
@@ -908,15 +934,16 @@ Successful execution of the operation returns the details of a single resource i
 
  GET /rds/v1/resources/{uid}
 
-RDS supports different content types, i.e., the result can be delivered in a variety of formats. The client MUST specify the desired format in its request, by defining an appropriate Content-Type in the HTTP request header.
+RDS supports different content types, i.e., the result can be delivered in a variety of data exchange models (see xref:data-exchange-models[xrefstyle=short]). The client MUST specify the desired data exchange model in its request, by defining an appropriate Content-Type in the HTTP request header.
 
 Valid options are:
 
+[cols="1,2"]
 |===
 |Content-Type |Format of result
 
 |application/json
-|Result will be provided as Service Description Template (SDT) in JSON format. See `sdt-json.adoc` for more details. All registries MUST offer this option.
+|Result will be provided as Service Description Template (SDT) in JSON format. See https://github.com/NATO-MSaaS/sdt-json for more details. All registries MUST offer this option.
 
 |application/vnd.msc-dms
 |Result will be provided as MSC-DMS compliant XML file. OPTIONAL.
@@ -945,9 +972,29 @@ Valid options are:
 === Response (if successful)
 Successful execution of the operation returns a single resource with all details in the payload.
 
+.Example Request
+----
+GET https://<server>/rds/v1/resources/64afd7ab-36b0-4f9b-a3b8-4c5e4de7079d
+Content-Type: application/json
+----
+
+.Example Response
 ----
 HTTP/1.1 200 OK
 Content-Type: application/json
+
+{
+    "coreInformation": {
+        "name": "Convoy Scenario-1-2023-05-02T08:08:50.076884900",
+        "uid": "64afd7ab-36b0-4f9b-a3b8-4c5e4de7079d",
+        "description": "This is a Convoy scenario with 3 units",
+        "owner": "David the Scenario Creator",
+        "version": "2.0.1",
+        "icon": "iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAA...",
+        "resourceType": "scenario",
+        "url": "https://registry.local/extern/registry-0123-abcd-6543"
+    }
+}
 ----
 
 
