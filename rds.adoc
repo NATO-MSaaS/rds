@@ -47,7 +47,7 @@
 
 == Nomenclature
 
-The keywords “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY” and “OPTIONAL” in this document are to be interpreted as described in RFC 2119 and summarized below [1].
+The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY" and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 and summarized below [1].
 
 [cols="1,3"]
 |===
@@ -304,8 +304,8 @@ A request with an invalid JSON payload will fail. The following request contains
 .Request (payload):
 ----
 {
-   "name1": "value1"
-   "name2": "value2"
+    "name1": "value1"
+    "name2": "value2"
 }
 ----
 
@@ -315,14 +315,14 @@ HTTP/1.1 400 Bad request
 Content-Type: application/json
 
 {
-  "errors": [
-    {
-      "status":"400",
-      "code":"ERR-002",
-      "title":"Invalid Request",
-      "details":"A request was invalid and caused the following error: Invalid JSON."
-    }
-  ]
+    "errors": [
+        {
+            "status":"400",
+            "code":"ERR-002",
+            "title":"Invalid Request",
+            "details":"A request was invalid and caused the following error: Invalid JSON."
+        }
+    ]
 }
 ----
 
@@ -333,9 +333,9 @@ In this example, the payload for creating a new resource does not contain all re
 .Request:
 ----
 {
-   "coreInformation": {
-      "description": "resourceType and name are MISSING!"
-   }
+    "coreInformation": {
+        "description": "resourceType and name are MISSING!"
+    }
 }
 ----
 
@@ -345,18 +345,16 @@ HTTP/1.1 400 Bad request
 Content-Type: application/json
 
 {
-  "errors": [
-    {
-      "status":"400",
-      "code":"ERR-002",
-      "title":"Invalid Request",
-      "details":"A request was invalid and caused the following error: Missing required fields coreInformation.resourceType, coreInformation.name."
-    }
-  ]
+    "errors": [
+        {
+            "status":"400",
+            "code":"ERR-002",
+            "title":"Invalid Request",
+            "details":"A request was invalid and caused the following error: Missing required fields coreInformation.resourceType, coreInformation.name."
+        }
+    ]
 }
 ----
-
-
 
 
 === Missing permission
@@ -380,14 +378,14 @@ HTTP/1.1 403 Forbidden
 Content-Type: application/json
 
 {
-   "errors": [
-      {
-         "status": "403",
-         "code": "ERR-003",
-         "title": "Forbidden.",
-         "details": "User is not permitted to perform this action"
-      }
-   ]
+    "errors": [
+        {
+            "status": "403",
+            "code": "ERR-003",
+            "title": "Forbidden.",
+            "details": "User is not permitted to perform this action"
+        }
+    ]
 }
 ----
 
@@ -407,14 +405,14 @@ HTTP/1.1 500 Internal Server Error
 Content-Type: application/json
 
 {
-  errors: [
-    {
-      "status": "500",
-      "code": "ERR-100",
-      "title": "Internal server error",
-      "details": "The server encountered an internal error."
-    }
-  ]
+    errors: [
+        {
+            "status": "500",
+            "code": "ERR-100",
+            "title": "Internal server error",
+            "details": "The server encountered an internal error."
+        }
+    ]
 }
 ----
 
@@ -431,7 +429,7 @@ POST /rds/v1/resources/
 Content-Type: application/json
 
 {
-	"coreInformation": { ... },
+    "coreInformation": { ... },
     "additionalInformation": {
         "timeOfDay": "Day",
         "environment": "On a nice green lawn in June.",
@@ -439,7 +437,7 @@ Content-Type: application/json
         "approximatedDurationOfTraining": "10",
         ...
     }
-
+}
 ----
 
 The example payload above
@@ -478,8 +476,8 @@ PUT /rds/v1/resources/00000000-0000-0000-00000-0000000000
 Content-Type: application/json
 
 {
-  "coreInformation": {},
-  "additionalInformation": {}
+    "coreInformation": {},
+    "additionalInformation": {}
 }
 ----
 
@@ -630,14 +628,14 @@ POST /rds/v1/resources/
 Content-Type: application/json
 
 {
-  "coreInformation": {
-    "name": "Weapon Effect Service",
-    "description": "The WES provides weapon effects...",
-    "owner": "ACME Inc.",
-    "version": "2.0.1",
-    "resourceType": "M&S Service",
-    "url": "https://msaas.acme.com/extern/registry-0123-abcd-6543"
-  }
+    "coreInformation": {
+        "name": "Weapon Effect Service",
+        "description": "The WES provides weapon effects...",
+        "owner": "ACME Inc.",
+        "version": "2.0.1",
+        "resourceType": "M&S Service",
+        "url": "https://msaas.acme.com/extern/registry-0123-abcd-6543"
+    }
 }
 ----
 
@@ -711,7 +709,7 @@ POST /rds/v1/resources/
 Content-Type: application/json
 
 {
-	"coreInformation": {
+    "coreInformation": {
         "description": "The attributes resourceType and name are MISSING!"
     }
 }
@@ -723,14 +721,14 @@ HTTP/1.1 400 Bad request
 Content-Type: application/json
 
 {
-  "errors": [
-    {
-      "status" : "400",
-      "code" : "ERR-002",
-      "title" : "Invalid Request",
-      "details" : "A request was invalid and caused the following error: Missing required field(s) coreInformation.resourceType, coreInformation.name."
-    }
-  ]
+    "errors": [
+        {
+            "status" : "400",
+            "code" : "ERR-002",
+            "title" : "Invalid Request",
+            "details" : "A request was invalid and caused the following error: Missing required field(s) coreInformation.resourceType, coreInformation.name."
+        }
+    ]
 }
 ----
 
@@ -760,12 +758,13 @@ POST /rds/v1/resources/
 Content-Type: application/json
 
 {
-   "coreInformation": {
-      "resourceType" : "scenario",
-      "name" : "Convoy Scenario",
-      "description" : "This is a Convoy scenario with 3 units",
-      "uid" : "REG-9876-5432-1234"
-   }
+    "coreInformation": {
+        "resourceType" : "scenario",
+        "name" : "Convoy Scenario",
+        "description" : "This is a Convoy scenario with 3 units",
+        "uid" : "REG-9876-5432-1234"
+    }
+}
 ----
 
 .Response:
@@ -774,14 +773,14 @@ HTTP/1.1 400 Bad request
 Content-Type: application/json
 
 {
-   "errors": [
-      {
-        "status" : "400",
-        "code" : "ERR-002",
-        "title" : "Invalid Request",
-        "details" : "A request was invalid and caused the following error: The attribute uid is not allowed."
-      }
-   ]
+    "errors": [
+        {
+            "status" : "400",
+            "code" : "ERR-002",
+            "title" : "Invalid Request",
+            "details" : "A request was invalid and caused the following error: The attribute uid is not allowed."
+        }
+    ]
 }
 ----
 
@@ -856,17 +855,17 @@ This operation returns a list of all resources.
 
 RDS supports different content types, i.e., the result can be delivered in a variety of data exchange models (see xref:data-exchange-models[xrefstyle=short]). The client MUST specify the desired data exchange model in its request, by defining an appropriate Content-Type in the HTTP request header.
 
-Valid options are:
+Possible options are:
 
 [cols="1,2"]
 |===
-|Content-Type |Format of result
+|Content-Type |Data exchange model (format) of result
 
 |application/json
-|Result will be provided as Service Description Template (SDT) in JSON format. See https://github.com/NATO-MSaaS/sdt-json for more details. All registries MUST offer this option.
+|Result will be provided as Service Description Template (SDT) in JSON format. See https://github.com/NATO-MSaaS/sdt-json for more details. All registries MUST offer this format.
 
 |application/vnd.msc-dms
-|Result will be provided as MSC-DMS compliant XML file. OPTIONAL.
+|Result will be provided as MSC-DMS compliant XML file. Registries MAY offer this format.
 
 |===
 
@@ -936,17 +935,17 @@ Successful execution of the operation returns the details of a single resource i
 
 RDS supports different content types, i.e., the result can be delivered in a variety of data exchange models (see xref:data-exchange-models[xrefstyle=short]). The client MUST specify the desired data exchange model in its request, by defining an appropriate Content-Type in the HTTP request header.
 
-Valid options are:
+Possible options are:
 
 [cols="1,2"]
 |===
-|Content-Type |Format of result
+|Content-Type |Data exchange model (format) of result
 
 |application/json
-|Result will be provided as Service Description Template (SDT) in JSON format. See https://github.com/NATO-MSaaS/sdt-json for more details. All registries MUST offer this option.
+|Result will be provided as Service Description Template (SDT) in JSON format. See https://github.com/NATO-MSaaS/sdt-json for more details. All registries MUST offer this format.
 
 |application/vnd.msc-dms
-|Result will be provided as MSC-DMS compliant XML file. OPTIONAL.
+|Result will be provided as MSC-DMS compliant XML file. Registries MAY offer this format.
 
 |===
 
@@ -1034,8 +1033,6 @@ Successful execution of the operation, i.e., specified uid exists and a file is 
 HTTP/1.1 200 OK
 Content-Type: application/octet-stream
 ----
-
-
 
 
 == Bibliography
