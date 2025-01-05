@@ -4,7 +4,7 @@ The NATO Resource Discovery Specification (RDS) defines an HTTP-based REST proto
 
 ## License
 
-Copyright (C) 2024 NATO/OTAN.
+Copyright (C) 2025 NATO/OTAN.
 
 This work is licensed under CC BY-ND 4.0. To view a copy of this license, visit (http://creativecommons.org/licenses/by-nd/4.0/). A copy of the license is available [here](LICENSE.md). 
 
@@ -26,8 +26,8 @@ Version numbering of the NATO RDS and associated documentation is based on the f
 * Update of the minor version number is made if the change constitutes minor additions to existing concepts and editorial changes that do not break backward compatibility but may require updates of software to use new concepts.
 * Patches are released to fix minor issues that do not break backward compatibility.
 
-|Version|Release Date|Description|
-|---|---|---|
-|v1.0|tbd (2024)|Initial public release of NATO RDS as developed by MSG-164 and MSG-195. |
+|Version| Release Date |Description|
+|---|--------------|---|
+|v1.0| 05 Jan 2025  |Initial public release of NATO RDS as developed by MSG-164 and MSG-195. |
 
 [Changelog](changelog.md)
